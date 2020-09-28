@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 
+
 namespace task {
 const double EPSILON = 1.0E-12;
 
