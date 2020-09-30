@@ -6,7 +6,19 @@ typedef std::function<int (int)> Op;
 
 
 Op compose (size_t n, Op ops[]) {
-    /// Your code goes here.
+    Op identpotentFunc =
+            [] (int x) -> int {
+                return x;
+            };
+    if(n ==0){
+        return identpotentFunc;
+    }
+
+    Op wrapperOp = [n, ops ](int x)->int{
+        return  compose(n -1, ops)(ops[n - 1](x));
+    };
+
+   return    wrapperOp;
 }
 
 
@@ -14,16 +26,16 @@ int main () {
     /// Simple tests:
 
     Op op1 =
-        [] (int x) -> int {
-            return x + 1;
-        };
+            [] (int x) -> int {
+                return x + 1;
+            };
 
     auto op2 =
-        [] (int p) -> Op {
-            return [p] (int x) {
-                return p * x;
+            [] (int p) -> Op {
+                return [p] (int x) {
+                    return p * x;
+                };
             };
-        };
 
     {
         Op ops[4] = {op1, op2(2), op1, op2(2)};
